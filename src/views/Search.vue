@@ -1,10 +1,7 @@
 <template>
   <div class="about" v-bind:class="{ warm: backgroundCheck }">
-    <h2>About</h2>
-    <weather-item city="Hawaii"></weather-item>
-    <weather-item city="Chur"></weather-item>
-    <weather-item city="Hamburg"></weather-item>
-    <weather-item city="Lugano"></weather-item>
+    <h2>Surf Info</h2>
+
     <input
       type="text"
       class="search__bar"
@@ -16,19 +13,26 @@
     <p v-if="forecast.main">
       {{ forecastTemperature }}
     </p>
-    <p></p>
+    <p v-if="forecast.weather">
+      {{ forecastDescription}}
+    </p>
+    <p v-if="forecast.wind">
+      {{ forecastWind}}
+    </p>
+    <div v-if="forecast.weather">
+      <img v-bind:src="require('../assets/' + forecastIcon + '.png')" alt="">
+      
+    </div>
+
   </div>
 </template>
 
 <script>
-import WeatherItem from "@/components/WeatherItem";
 import { mapFields } from "vuex-map-fields";
 
 export default {
-  name: "search",
-  components: {
-    WeatherItem,
-  },
+  name: "Search",
+  components: {},
   data() {
     return {
       forecast: {},
@@ -39,6 +43,23 @@ export default {
     forecastTemperature() {
       return this.forecast.main.temp + " Grad Celcius";
     },
+    forecastDescription() {
+      return "Es ist " + this.forecast.weather[0].description;
+    },
+    forecastWind() {
+      return "Windgeschwindigkeit beträgt " + this.forecast.wind.speed + " Knoten";
+    },
+    forecastIcon() {
+      return this.forecast.weather[0].icon;
+    },
+    apiUrl() {
+      return (
+        "https://api.openweathermap.org/data/2.5/weather?q=" +
+        this.city +
+        "&units=metric&lang=de&appid=" +
+        process.env.VUE_APP_WEATHER_KEY
+      );
+    },
     backgroundCheck() {
       if (this.forecast.main && this.forecast.main.temp > 16) {
         return true;
@@ -46,9 +67,6 @@ export default {
         return false;
       }
     },
-  },
-  city() {
-    return this.$store.getters.currentCity;
   },
   methods: {
          fetchWeather() {
@@ -64,11 +82,11 @@ export default {
 .about {
   height: 100vh;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   color: white;
   font-size: 1.8rem;
   text-shadow: 1px 1px 4px #333, 1px 1px 4px #fff;
-  background: url("../assets/cold_bg.jpg"), radial-gradient(#ccc, #333);
+  background: url("../assets/main_bg.jpg"), radial-gradient(#ccc, #333);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
