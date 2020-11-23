@@ -5,18 +5,12 @@
     <weather-item city="Chur"></weather-item>
     <weather-item city="Hamburg"></weather-item>
     <weather-item city="Lugano"></weather-item>
-    <input
-      type="text"
-      class="search__bar"
-      placeholder="Search..."
-      v-model="city"
-      @keypress="fetchWeather"
-    />
+   
     <br />
-    <p v-if="forecast.main">
-      {{ forecastTemperature }}
-    </p>
-    <p></p>
+    <hr>
+
+    <button @click=" goNewYork">New York</button>
+
   </div>
 </template>
 
@@ -56,6 +50,11 @@ export default {
             this.forecast = response
           })
     },
+    goNewYork() {
+      this.$router.push({name: 'City', params: {
+        city: 'New York'
+      }})
+    }
   },
 };
 </script>
@@ -68,16 +67,11 @@ export default {
   color: white;
   font-size: 1.8rem;
   text-shadow: 1px 1px 4px #333, 1px 1px 4px #fff;
-  background: url("../assets/cold_bg.jpg"), radial-gradient(#ccc, #333);
+  background: url("../assets/sundown.jpg"), radial-gradient(#ccc, #333);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
   background-blend-mode: multiply;
 }
-.about.warm {
-  background: url("../assets/warm_bg.jpg"), radial-gradient(#ccffff, #00ffff);
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
+
 </style>

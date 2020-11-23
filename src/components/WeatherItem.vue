@@ -6,13 +6,12 @@
     <p>Windgeschwindigkeit: {{ surfInfos.speed }} Knoten</p>
     <p>{{ surfInfos.deg }}</p>
     <br />
-    <button @click="this.$emit(event, 'testEvent')">Test</button>
-    <hr>
+   
   </div>
 </template>
 
 <script>
-import axios from "axios";
+
 export default {
   name: "Weather",
   data() {
@@ -24,7 +23,7 @@ export default {
   computed: {
     forecastTemperature() {
       if (this.forecast.main) {
-        return this.forecast.main.temp + " Grad Celcius";
+        return `${Math.round(this.forecast.main.temp)}°C`;
       } else {
         return "unbekannt";
       }
@@ -44,34 +43,26 @@ export default {
       } else {
         return "unknown";
       }
-    },
-    apiUrl() {
-      return (
-        "https://api.openweathermap.org/data/2.5/weather?q=" +
-        this.city +
-        "&units=metric&lang=de&appid=" +
-        process.env.VUE_APP_WEATHER_KEY
-      );
-    },
+    }
   },
   mounted: function () {
     this.fetchWeather()
   },
   methods: {
-    fetchWeather() {
-      let self = this;
-      axios
-        .get(this.apiUrl)
-        .then(function (response) {
-          // handle success
-          self.forecast = response.data;
-          console.log(self.forecast.wind.deg);
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        });
-    }
+      fetchWeather() {
+          this.$store.dispatch('fetchWeather', this.city).then(response => {
+            this.forecast = response
+          })
+        }
   },
 };
 </script>
+<style lang="scss" scoped>
+.cities {
+  background-color: rgba(#ffffff, .2);
+  width: 80%;
+  margin: 12px auto;
+  padding: 12px;
+  border-radius: 16px;
+}
+</style>

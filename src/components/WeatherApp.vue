@@ -24,6 +24,8 @@
       <div class="weather__values">
         <div class="weather__temp">{{ Math.round(weather.main.temp) }}°C</div>
         <div class="weather__cond">{{ weather.weather[0].description }}</div>
+        <div class="wind__dir">{{ windDir() }}</div>
+        <div class="wind__speed">{{ windSpeed() }}</div>
         <div class="weather__icon">
           <img
             v-bind:src="
@@ -98,6 +100,22 @@ export default {
 
       return `${day} ${date} ${month} ${year}`;
     },
+    windSpeed(){
+      let speed = this.weather.wind.speed;
+      return `Die Windgeschwindigkeit beträgt ${ speed } Knoten!`;
+    },
+    windDir(){
+      let degree = this.weather.wind.deg;
+    if (degree>337.5) return 'Wind aus Richtung Nord';
+    if (degree>292.5) return 'Wind aus Richtung Nord West';
+    if(degree>247.5) return 'Wind aus Richtung West';
+    if(degree>202.5) return 'Wind aus Richtung Süd West';
+    if(degree>157.5) return 'Wind aus Richtung Süd';
+    if(degree>122.5) return 'Wind aus Richtung Süd Ost';
+    if(degree>67.5) return 'Wind aus Richtung Ost';
+    if(degree>22.5){return 'Wind aus Richtung Nord Ost';}
+    return 'Kein Wind';
+}
   },
 };
 </script>
@@ -108,7 +126,8 @@ export default {
 }
 .weather {
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
   color: white;
   font-size: 1.8rem;
   text-shadow: 1px 1px 4px #333, 1px 1px 4px #fff;
@@ -118,13 +137,13 @@ export default {
   background-blend-mode: multiply;
 }
 .weather.warm {
-  background: url("../assets/warm_bg.jpg"), radial-gradient(#ccffff, #00ffff);
+  background: url("../assets/beach.jpg"), radial-gradient(#ffff66,#ffaa80);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 .weather.cold {
-  background: url("../assets/cold_bg.jpg"), radial-gradient(#ccc, #333);
+  background: url("../assets/snowboard.jpg"), radial-gradient(#ccc, #333);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -132,6 +151,7 @@ export default {
 .weather__icon {
   width: 150px;
   margin: auto;
+  border-radius: 12px;
   background-color: rgba(white, 0.7);
   img {
     width: 100%;

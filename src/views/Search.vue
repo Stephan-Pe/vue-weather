@@ -7,23 +7,24 @@
       class="search__bar"
       placeholder="Search..."
       v-model="city"
-      @keypress="fetchWeather"
+      v-on:keyup.enter="fetchWeather"
     />
     <br />
     <p v-if="forecast.main">
-      {{ forecastTemperature }}
+      {{ forecastTemperature}}
     </p>
     <p v-if="forecast.weather">
-      {{ forecastDescription}}
+      {{ forecastDescription }}
     </p>
     <p v-if="forecast.wind">
-      {{ forecastWind}}
+      {{ forecastWind }}
     </p>
-    <div v-if="forecast.weather">
-      <img v-bind:src="require('../assets/' + forecastIcon + '.png')" alt="">
-      
+    <p v-if="forecast.wind">
+      {{ windDir }}
+    </p>
+    <div class="weather__image" v-if="forecast.weather">
+      <img v-bind:src="require('../assets/' + forecastIcon + '.png')" alt="" />
     </div>
-
   </div>
 </template>
 
@@ -41,24 +42,32 @@ export default {
   computed: {
     ...mapFields(["city"]),
     forecastTemperature() {
-      return this.forecast.main.temp + " Grad Celcius";
+      return `${Math.round(this.forecast.main.temp )} °C`;
     },
     forecastDescription() {
-      return "Es ist " + this.forecast.weather[0].description;
+      return this.forecast.weather[0].description;
     },
     forecastWind() {
-      return "Windgeschwindigkeit beträgt " + this.forecast.wind.speed + " Knoten";
+      return (
+        "Windgeschwindigkeit beträgt " + this.forecast.wind.speed + " Knoten"
+      );
     },
     forecastIcon() {
       return this.forecast.weather[0].icon;
     },
-    apiUrl() {
-      return (
-        "https://api.openweathermap.org/data/2.5/weather?q=" +
-        this.city +
-        "&units=metric&lang=de&appid=" +
-        process.env.VUE_APP_WEATHER_KEY
-      );
+    windDir() {
+      let degree = this.forecast.wind.deg;
+      if (degree > 337.5) return "Wind aus Richtung Nord";
+      if (degree > 292.5) return "Wind aus Richtung Nord West";
+      if (degree > 247.5) return "Wind aus Richtung West";
+      if (degree > 202.5) return "Wind aus Richtung Süd West";
+      if (degree > 157.5) return "Wind aus Richtung Süd";
+      if (degree > 122.5) return "Wind aus Richtung Süd Ost";
+      if (degree > 67.5) return "Wind aus Richtung Ost";
+      if (degree > 22.5) {
+        return "Wind aus Richtung Nord Ost";
+      }
+      return "Meist schwacher Wind ohne bestimmbare Windrichtung";
     },
     backgroundCheck() {
       if (this.forecast.main && this.forecast.main.temp > 16) {
@@ -69,33 +78,44 @@ export default {
     },
   },
   methods: {
-         fetchWeather() {
-          this.$store.dispatch('fetchWeather', this.city).then(response => {
-            this.forecast = response
-          })
+    fetchWeather() {
+      this.$store.dispatch("fetchWeather", this.city).then((response) => {
+        this.forecast = response;
+      });
     },
   },
+  
 };
+
 </script>
 
 <style lang="scss" scoped>
 .about {
-  height: 100vh;
-  width: 100%;
-  height: 100vh;
+  height: 100%;
+  width: 80%;
+  margin: auto;
+  border-radius: 16px;
+  padding: 24px;
+  min-height: 45vh;
   color: white;
   font-size: 1.8rem;
   text-shadow: 1px 1px 4px #333, 1px 1px 4px #fff;
-  background: url("../assets/main_bg.jpg"), radial-gradient(#ccc, #333);
+  background: url("../assets/snowboard.jpg"), radial-gradient(#ccc, #333);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
   background-blend-mode: multiply;
 }
 .about.warm {
-  background: url("../assets/warm_bg.jpg"), radial-gradient(#ccffff, #00ffff);
+  background: url("../assets/beach.jpg"), radial-gradient(#fff3cc, #b4b223);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+.weather__image {
+  background-color: rgba(#00ff6e, 0.5);
+  width: 160px;
+  border-radius: 12px;
+  margin: auto;
 }
 </style>

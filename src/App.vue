@@ -3,7 +3,8 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">Default Cities</router-link> |
-      <router-link to="/search">Search Cities</router-link> 
+      <router-link to="/search">Search Cities</router-link> |
+      <router-link to="/city">Cities</router-link> 
      
     </div>
     <router-view/>
