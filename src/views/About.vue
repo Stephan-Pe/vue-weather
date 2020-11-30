@@ -6,10 +6,10 @@
     <weather-item city="Hamburg"></weather-item>
     <weather-item city="Lugano"></weather-item>
    
-    <br />
     <hr>
 
-    <button @click=" goNewYork">New York</button>
+    <v-btn elevation="6" large class="pink accent-2" @click=" goNewYork">New York</v-btn>
+    
 
   </div>
 </template>

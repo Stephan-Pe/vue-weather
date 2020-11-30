@@ -18,11 +18,10 @@
     <br />
     <div class="weather__container" v-if="typeof weather.main != 'undefined'">
       <div class="weather__location">
-        {{ weather.name }}, {{ weather.sys.country }}
+        {{ weather.name }}, {{ weather.sys.country }}, bumelig  {{ Math.round(weather.main.temp) }}°C
       </div>
       <div class="weather__date">{{ dateApp() }}</div>
       <div class="weather__values">
-        <div class="weather__temp">{{ Math.round(weather.main.temp) }}°C</div>
         <div class="weather__cond">{{ weather.weather[0].description }}</div>
         <div class="wind__dir">{{ windDir() }}</div>
         <div class="wind__speed">{{ windSpeed() }}</div>
@@ -98,7 +97,7 @@ export default {
       let month = months[d.getMonth()];
       let year = d.getFullYear();
 
-      return `${day} ${date} ${month} ${year}`;
+      return `${day}, ${date}. ${month}. ${year}`;
     },
     windSpeed(){
       let speed = this.weather.wind.speed;
@@ -114,7 +113,7 @@ export default {
     if(degree>122.5) return 'Wind aus Richtung Süd Ost';
     if(degree>67.5) return 'Wind aus Richtung Ost';
     if(degree>22.5){return 'Wind aus Richtung Nord Ost';}
-    return 'Kein Wind';
+    return 'Wind aus Nord, Nordost';
 }
   },
 };
@@ -123,6 +122,17 @@ export default {
 <style lang="scss" scoped>
 .spacing > * + * {
   margin-top: var(--spacer, 1.2rem);
+}
+input[type=text]{
+  background-color: rgba(#fff, .5);
+  border-radius: 12px;
+  box-shadow: inset 0 0 4px #fff, 0 0 4px #333;
+  color: #333;
+  padding-left: 12px;
+  outline: none;
+}
+.weather__container {
+  padding-bottom: 24px;
 }
 .weather {
   width: 100%;
@@ -148,11 +158,15 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
 }
+div {
+  min-height: 60px;
+}
 .weather__icon {
   width: 150px;
   margin: auto;
   border-radius: 12px;
-  background-color: rgba(white, 0.7);
+  border: 4px solid lawngreen;
+  background-color: rgba(gold, 0.7);
   img {
     width: 100%;
   }

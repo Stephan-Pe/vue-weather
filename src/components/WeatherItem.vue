@@ -2,7 +2,10 @@
   <div class="cities">
     <p>{{ city }}: {{ forecastTemperature }}</p>
     <p>{{ showInfos.description }}</p>
-    <img v-bind:src="require('../assets/' + showInfos.icon + '.png')" />
+    <div class="image">
+      <img v-bind:src="require('../assets/' + showInfos.icon + '.png')" />
+    </div>
+    
     <p>Windgeschwindigkeit: {{ surfInfos.speed }} Knoten</p>
     <p>{{ surfInfos.deg }}</p>
     <br />
@@ -64,5 +67,11 @@ export default {
   margin: 12px auto;
   padding: 12px;
   border-radius: 16px;
+}
+.image {
+  width: 200px;
+  margin: auto;
+  border-radius: 16px;
+  background: radial-gradient(rgba(255, 255, 230, .5),rgba(191, 255, 128, .5));
 }
 </style>

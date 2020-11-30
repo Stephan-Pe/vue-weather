@@ -1,5 +1,5 @@
 <template>
-  <div class="about" v-bind:class="{ warm: backgroundCheck }">
+  <div class="about">
     <h2>Surf Info</h2>
 
     <input
@@ -100,22 +100,30 @@ export default {
   color: white;
   font-size: 1.8rem;
   text-shadow: 1px 1px 4px #333, 1px 1px 4px #fff;
-  background: url("../assets/snowboard.jpg"), radial-gradient(#ccc, #333);
+  //background: url("../assets/snowboard.jpg"), radial-gradient(#ccc, #333);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
   background-blend-mode: multiply;
 }
-.about.warm {
+/* .about.warm {
   background: url("../assets/beach.jpg"), radial-gradient(#fff3cc, #b4b223);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-}
+} */
 .weather__image {
   background-color: rgba(#00ff6e, 0.5);
   width: 160px;
   border-radius: 12px;
   margin: auto;
+}
+input[type=text]{
+  background-color: rgba(#fff, .5);
+  border-radius: 12px;
+  box-shadow: inset 0 0 4px #fff, 0 0 4px #333;
+  color: #333;
+  padding-left: 12px;
+  outline: none;
 }
 </style>

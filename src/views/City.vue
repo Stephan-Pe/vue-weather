@@ -4,7 +4,7 @@
     <weather-store ></weather-store>
    
     <br />
-    <hr>
+    
  
   </div>
 </template>
@@ -42,13 +42,15 @@ export default {
 
 <style lang="scss" scoped>
 .about {
+  display: flex;
+  align-items: center;
   height: 100vh;
   width: 100%;
   height: 100%;
   color: white;
   font-size: 1.8rem;
   text-shadow: 1px 1px 4px #333, 1px 1px 4px #fff;
-  background: url("../assets/sundown.jpg"), radial-gradient(#ccc, #333);
+  //background: url("../assets/sundown.jpg"), radial-gradient(#ccc, #333);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;

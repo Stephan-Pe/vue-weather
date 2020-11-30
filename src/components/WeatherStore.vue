@@ -1,6 +1,6 @@
 <template>
   <div>
-        aktuelles Wetter im vuex Store:
+        So ist das Wetter in -
         {{forecastCity}}: {{forecastTemperature}}
     </div>
 </template>
@@ -11,7 +11,7 @@ export default {
   name: "Weather",
   data() {
     return {
-    
+   
     };
   },
   computed: {
