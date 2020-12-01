@@ -18,7 +18,8 @@
     <br />
     <div class="weather__container" v-if="typeof weather.main != 'undefined'">
       <div class="weather__location">
-        {{ weather.name }}, {{ weather.sys.country }}, bumelig  {{ Math.round(weather.main.temp) }}°C
+        {{ weather.name }}, {{ weather.sys.country }} / Temperatur:
+        {{ Math.round(weather.main.temp) }}°C
       </div>
       <div class="weather__date">{{ dateApp() }}</div>
       <div class="weather__values">
@@ -44,7 +45,7 @@ export default {
   data() {
     return {
       mainTitle: "Wetter App",
-      api_key: "6b9d9bb55f16b29fd2d357b3050906bc",
+      //api_key: "6b9d9bb55f16b29fd2d357b3050906bc",
       base_url: "https://api.openweathermap.org/data/2.5/",
       city: "",
       query: "",
@@ -55,7 +56,7 @@ export default {
     fetchWeather(e) {
       if (e.key === "Enter") {
         fetch(
-          `${this.base_url}weather?q=${this.query}&units=metric&lang=de&APPID=${this.api_key}`
+          `${this.base_url}weather?q=${this.query}&units=metric&lang=de&APPID=${process.env.VUE_APP_WEATHER_KEY}`
         )
           .then((res) => {
             return res.json();
@@ -91,30 +92,30 @@ export default {
         "Freitag",
         "Sonnabend",
       ];
-
       let day = days[d.getDay()];
       let date = d.getDate();
       let month = months[d.getMonth()];
       let year = d.getFullYear();
-
-      return `${day}, ${date}. ${month}. ${year}`;
+      return `${day} ${date} ${month} ${year}`;
     },
-    windSpeed(){
+    windSpeed() {
       let speed = this.weather.wind.speed;
-      return `Die Windgeschwindigkeit beträgt ${ speed } Knoten!`;
+      return `Die Windgeschwindigkeit beträgt ${speed} Knoten!`;
     },
-    windDir(){
+    windDir() {
       let degree = this.weather.wind.deg;
-    if (degree>337.5) return 'Wind aus Richtung Nord';
-    if (degree>292.5) return 'Wind aus Richtung Nord West';
-    if(degree>247.5) return 'Wind aus Richtung West';
-    if(degree>202.5) return 'Wind aus Richtung Süd West';
-    if(degree>157.5) return 'Wind aus Richtung Süd';
-    if(degree>122.5) return 'Wind aus Richtung Süd Ost';
-    if(degree>67.5) return 'Wind aus Richtung Ost';
-    if(degree>22.5){return 'Wind aus Richtung Nord Ost';}
-    return 'Wind aus Nord, Nordost';
-}
+      if (degree > 337.5) return "Wind aus Richtung Nord";
+      if (degree > 292.5) return "Wind aus Richtung Nord West";
+      if (degree > 247.5) return "Wind aus Richtung West";
+      if (degree > 202.5) return "Wind aus Richtung Süd West";
+      if (degree > 157.5) return "Wind aus Richtung Süd";
+      if (degree > 122.5) return "Wind aus Richtung Süd Ost";
+      if (degree > 67.5) return "Wind aus Richtung Ost";
+      if (degree > 22.5) {
+        return "Wind aus Richtung Nord Ost";
+      }
+      return "Wind aus Nord, Nordost";
+    },
   },
 };
 </script>
@@ -123,8 +124,8 @@ export default {
 .spacing > * + * {
   margin-top: var(--spacer, 1.2rem);
 }
-input[type=text]{
-  background-color: rgba(#fff, .5);
+input[type="text"] {
+  background-color: rgba(#fff, 0.5);
   border-radius: 12px;
   box-shadow: inset 0 0 4px #fff, 0 0 4px #333;
   color: #333;
@@ -147,7 +148,7 @@ input[type=text]{
   background-blend-mode: multiply;
 }
 .weather.warm {
-  background: url("../assets/beach.jpg"), radial-gradient(#ffff66,#ffaa80);
+  background: url("../assets/beach.jpg"), radial-gradient(#ffff66, #ffaa80);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;

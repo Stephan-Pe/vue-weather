@@ -1,29 +1,18 @@
 <template>
-  <v-app light >
-    <v-main v-bind:class="backgroundImage">
-      <v-toolbar class="white">
-        <v-toolbar-items>
-          <v-btn text elevation-16 class="pink accent-2" to="/">Home</v-btn>
-          <v-btn text class="green accent-1" to="/about">Default Cities</v-btn>
-          <v-btn text class="green accent-1" to="/search">Search Cities</v-btn>
-          <v-btn text class="green accent-1" to="/city">Cities</v-btn>
-          <div>
-            <img
-              v-bind:src="require('./assets/wind-rose.png')"
-              alt="The Weather Logo"
-              height="100%"
-            />
-          </div>
-        </v-toolbar-items>
-      </v-toolbar>
-     
-      <router-view />
-
-    </v-main>
-  </v-app>
+   <div id="app">
+    <div id="nav">
+      <router-link to="/">Home</router-link>
+       <img
+            v-bind:src="
+              require('./assets/wind-rose.png')
+            "
+          />
+    </div>
+    <router-view/>
+  </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+
 export default {
   data: function () {
     return {
@@ -33,22 +22,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      backgroundImage: 'backgroundImage'
-    })
+ 
   },
-    mounted: function () {
-      this.$store.dispatch('fetchWeatherForStore', this.$store.state.city)
-    }
 };
 </script>
 
 <style lang="scss">
-/* * {
-  padding: 0 !important;
-  margin: 0;
-  box-sizing: border-box;
-} */
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -69,22 +48,21 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
 }
-.v-toolbar__content {
-  padding: 0 !important;
+
+#nav {
   width: 100%;
-  max-width: 100vw;
-}
-.v-btn__content {
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-.v-toolbar__items {
-  width: 100%;
-  justify-content: start;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
+  justify-content: space-between;
+  a {
+    font-size: 1.8rem;
+    text-decoration: none;
+  }
   img {
     height: 100%;
-    position: absolute;
-    right: 10px;
+    margin-right: 40px;
   }
 }
 </style>
